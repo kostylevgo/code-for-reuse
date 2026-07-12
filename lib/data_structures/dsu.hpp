@@ -1,12 +1,13 @@
-#ifndef DSU_HPP_
-#define DSU_HPP_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_DSU_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_DSU_HPP_
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 class DSU {
-public:
-    explicit DSU(int n) : dsu(n, -1) {}
+  public:
+    explicit DSU(int n) : dsu(n, -1) {
+    }
 
     int Get(int v) {
         int ans = v;
@@ -34,8 +35,8 @@ public:
         return Get(i) == Get(j);
     }
 
-private:
+  private:
     std::vector<int> dsu;
 };
 
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_DSU_HPP_

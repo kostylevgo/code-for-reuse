@@ -1,20 +1,22 @@
-#pragma once
+#ifndef CODE_FOR_REUSE_STRINGS_SUFFIX_ARRAY_HPP_
+#define CODE_FOR_REUSE_STRINGS_SUFFIX_ARRAY_HPP_
 
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <numeric>
+#include <string>
+#include <vector>
 
-using namespace std;
-
-vector<int> suffix_array(const auto& s, bool sort_suffixes=true) {
+std::vector<int> suffix_array(const auto& s, bool sort_suffixes = true) {
     int n = s.size() + sort_suffixes;
     auto [mn, mx] = minmax_element(s.begin(), s.begin() + n);
-    vector<int> c(n), cur(n), sa(n), cnt(max<int>(*mx - *mn + 1, n) + 1);
-    iota(sa.begin(), sa.end(), 0);
+    std::vector<int> c(n), cur(n), sa(n), cnt(max<int>(*mx - *mn + 1, n) + 1);
+    std::iota(sa.begin(), sa.end(), 0);
     for (int i = 0; i < n; ++i) {
         c[i] = s[i] - *mn + 1;
     }
-    ranges::sort(sa, [&](int i, int j) { return c[i] < c[j]; });
+    std::ranges::sort(sa, [&](int i, int j) { return c[i] < c[j]; });
     for (int k = 1; k < n; k <<= 1) {
-        ranges::fill(cnt, 0);
+        std::ranges::fill(cnt, 0);
         for (int x : c) cnt[x]++;
         for (int i = 1; i < cnt.size(); ++i) cnt[i] += cnt[i - 1];
         for (int i : sa) {
@@ -38,9 +40,9 @@ vector<int> suffix_array(const auto& s, bool sort_suffixes=true) {
     return sa;
 }
 
-inline vector<int> find_lcp(const string& s, const vector<int>& sa) {
+inline std::vector<int> find_lcp(const std::string& s, const std::vector<int>& sa) {
     int n = sa.size();
-    vector<int> pos(n), lcp(n);
+    std::vector<int> pos(n), lcp(n);
     for (int i = 0; i < n; ++i) pos[sa[i]] = i;
     int l = 0;
     for (int i = 0; i < n; ++i) {
@@ -49,8 +51,10 @@ inline vector<int> find_lcp(const string& s, const vector<int>& sa) {
         } else {
             while (s[(i + l) % n] == s[(sa[pos[i] + 1] + l) % n]) ++l;
             lcp[pos[i]] = l;
-            l = max(0, l - 1);
+            l = std::max(0, l - 1);
         }
     }
     return lcp;
 }
+
+#endif  // CODE_FOR_REUSE_STRINGS_SUFFIX_ARRAY_HPP_

@@ -1,10 +1,14 @@
-#ifndef MONOID_HPP_
-#define MONOID_HPP_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_CONCEPTS_MONOID_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_CONCEPTS_MONOID_HPP_
+
 #include <concepts>
+#include <cstddef>
 #include <tuple>
 
 template <typename T>
-concept Monoid = std::default_initializable<T> && requires(const T& a, const T& b) { { T::Combine(a, b) } -> std::same_as<T>; };
+concept Monoid = std::default_initializable<T> && requires(const T& a, const T& b) {
+    { T::Combine(a, b) } -> std::same_as<T>;
+};
 
 template <typename T, typename U>
 concept MonoidOver = Monoid<T> && std::constructible_from<U>;
@@ -15,12 +19,11 @@ struct MonoidProduct : public std::tuple<Ms...> {
         return CombineHelper(a, b, std::make_index_sequence<std::tuple_size_v<MonoidProduct>>());
     }
 
-private:
+  private:
     template <size_t... I>
     static MonoidProduct CombineHelper(const MonoidProduct& a, const MonoidProduct& b, std::index_sequence<I...>) {
         return std::make_tuple((Combine(std::get<I>(a), std::get<I>(b)), ...));
     }
 };
 
-
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_CONCEPTS_MONOID_HPP_

@@ -1,16 +1,15 @@
-#pragma once
+#ifndef CODE_FOR_REUSE_MODULAR_ARITHMETICS_FACTORIALS_HPP_
+#define CODE_FOR_REUSE_MODULAR_ARITHMETICS_FACTORIALS_HPP_
+
+#include <array>
 
 #include "modular.hpp"
 
-#include <bits/stdc++.h>
-
-using namespace std;
-
-template <int N, int MOD = MOD>
+template <int N, int MOD>
 class Factorials {
     using mint = Modular<MOD>;
 
-public:
+  public:
     Factorials() {
         factorials_[0] = 1;
         for (int i = 1; i < N; ++i) {
@@ -49,7 +48,9 @@ public:
         return inverse_factorials_[x];
     }
 
-private:
-    array<mint, N> factorials_{};
-    array<mint, N> inverse_factorials_{};
+  private:
+    std::array<mint, N> factorials_{};
+    std::array<mint, N> inverse_factorials_{};
 };
+
+#endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_FACTORIALS_HPP_

@@ -1,10 +1,13 @@
-#pragma once
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_
 
 template <typename T, template <typename> typename Container>
 class ResettableArray : private Container<T> {
-public:
+  public:
     ResettableArray() = default;
-    explicit ResettableArray(int n): Container<T>(n), timestamps_(n) {}
+
+    explicit ResettableArray(int n) : Container<T>(n), timestamps_(n) {
+    }
 
     T& operator[](int i) {
         if (timestamps_[i] < t_) {
@@ -18,12 +21,14 @@ public:
         ++t_;
     }
 
-private:
+  private:
     Container<T>& AsContainer() const {
         return static_cast<Container<T>&>(*this);
     }
 
-private:
+  private:
     int t_ = 1;
     Container<int> timestamps_;
 };
+
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_

@@ -1,4 +1,10 @@
+#ifndef CODE_FOR_REUSE_MODULAR_ARITHMETICS_MODULAR_HPP_
+#define CODE_FOR_REUSE_MODULAR_ARITHMETICS_MODULAR_HPP_
 
+#include <compare>
+#include <cstdint>
+#include <functional>
+#include <iostream>
 
 template <int M>
 struct Modular {
@@ -56,14 +62,14 @@ struct Modular {
         return Exp(x, M - 2);
     }
 
-    friend istream& operator>>(istream& is, Modular& a) {
+    friend std::istream& operator>>(std::istream& is, Modular& a) {
         int64_t x;
         is >> x;
         a = Modular{x};
         return is;
     }
 
-    friend ostream& operator<<(ostream& os, Modular a) {
+    friend std::ostream& operator<<(std::ostream& os, Modular a) {
         return os << a.v;
     }
 
@@ -77,3 +83,5 @@ struct std::hash<Modular<N>> {
         return x.v;
     }
 };
+
+#endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_MODULAR_HPP_

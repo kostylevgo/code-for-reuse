@@ -1,10 +1,10 @@
-#ifndef TOP_DOWN_SEGMENT_TREE_HPP_
-#define TOP_DOWN_SEGMENT_TREE_HPP_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_TOP_DOWN_SEGMENT_TREE_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_TOP_DOWN_SEGMENT_TREE_HPP_
+
+#include <vector>
 
 #include "concepts/scheme.hpp"
 #include "helpers/segment_tree_iterator.hpp"
-
-#include <vector>
 
 template <Scheme S>
 class TopDownSegmentTree : private SchemeTraits<S>, private PushTraits {
@@ -14,10 +14,11 @@ class TopDownSegmentTree : private SchemeTraits<S>, private PushTraits {
     using M = std::decay_t<decltype(ToMonoid(std::declval<S&>()))>;
     using I = SegmentTreeIterator;
 
-public:
-    explicit TopDownSegmentTree(size_t n): n_(static_cast<int>(n)), segments_(ArraySize(n)) {}
+  public:
+    explicit TopDownSegmentTree(size_t n) : n_(static_cast<int>(n)), segments_(ArraySize(n)) {
+    }
 
-    TopDownSegmentTree(size_t n, const auto& initializer): TopDownSegmentTree(n) {
+    TopDownSegmentTree(size_t n, const auto& initializer) : TopDownSegmentTree(n) {
         Build(RootIterator(), initializer);
     }
 
@@ -48,14 +49,15 @@ public:
 
     template <Respects<S> T>
     void Update(Segment s, T&& op) {
-        static_assert(!SchemeTraits<std::decay_t<T>>::kNoPush, "Using an action with no push. Try using Setter instead.");
+        static_assert(!SchemeTraits<std::decay_t<T>>::kNoPush,
+                      "Using an action with no push. Try using Setter instead.");
         if (RootIterator().Outside(s) || s.Length() <= 0) {
             return;
         }
         UpdateRecursive(RootIterator(), s, op);
     }
 
-private:
+  private:
     [[nodiscard]] I RootIterator() const {
         return I::Root(n_);
     }
@@ -121,9 +123,9 @@ private:
         return 2 * std::bit_ceil(n) - 1;
     }
 
-private:
+  private:
     int n_;
     std::vector<S> segments_;
 };
 
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_TOP_DOWN_SEGMENT_TREE_HPP_

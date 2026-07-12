@@ -1,12 +1,13 @@
-#ifndef CONTAINER_AS_FUNCTION_HPP
-#define CONTAINER_AS_FUNCTION_HPP
+#ifndef CODE_FOR_REUSE_FUNCTIONAL_CONTAINER_AS_FUNCTION_HPP_
+#define CODE_FOR_REUSE_FUNCTIONAL_CONTAINER_AS_FUNCTION_HPP_
 
 #include <cstddef>
 
 template <typename T>
 class AsFunction {
-public:
-    explicit AsFunction(T& container): container_(container) {}
+  public:
+    explicit AsFunction(T& container) : container_(container) {
+    }
 
     const auto& operator()(size_t i) const {
         return container_[i];
@@ -16,8 +17,8 @@ public:
         return container_[i];
     }
 
-private:
+  private:
     T& container_;
 };
 
-#endif
+#endif  // CODE_FOR_REUSE_FUNCTIONAL_CONTAINER_AS_FUNCTION_HPP_

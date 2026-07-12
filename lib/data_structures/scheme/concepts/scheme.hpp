@@ -1,13 +1,13 @@
-#ifndef SCHEME_HPP_
-#define SCHEME_HPP_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_CONCEPTS_SCHEME_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_CONCEPTS_SCHEME_HPP_
 
 #include "action.hpp"
 
 template <typename S>
 struct SchemeTraits {
-private:
+  private:
     static constexpr auto HasGet(auto& s) {
-        if constexpr (requires {s.Get();}) {
+        if constexpr (requires { s.Get(); }) {
             if constexpr (std::is_lvalue_reference_v<decltype(s.Get())>) {
                 return std::true_type{};
             } else {
@@ -19,17 +19,18 @@ private:
     }
 
     static constexpr auto HasNoPush() {
-        if constexpr (requires { {S::kNoPush} -> std::convertible_to<bool>; }) {
+        if constexpr (requires {
+                          { S::kNoPush } -> std::convertible_to<bool>;
+                      }) {
             return S::kNoPush;
         }
-        return false_type{};
+        return std::false_type{};
     }
 
-    static_assert(std::is_same_v<decltype(HasGet(std::declval<S&>())),
-                                 decltype(HasGet(std::declval<const S&>()))
-                                 >, "Different Get() check results for S& and const S&");
+    static_assert(std::is_same_v<decltype(HasGet(std::declval<S&>())), decltype(HasGet(std::declval<const S&>()))>,
+                  "Different Get() check results for S& and const S&");
 
-public:
+  public:
     static auto& ToMonoid(const S& s) {
         if constexpr (HasGet(s)) {
             return s.Get();
@@ -50,12 +51,10 @@ public:
 };
 
 template <typename S>
-concept Scheme = Respects<S, S>
-&& requires(S& s) { s.Reset(); }
-&& requires(S& s, SegmentTreeIterator i) { PushTraits::SelfPush(s, i); }
-&& requires(const S s) { SchemeTraits<S>::ToMonoid(s); }
-&& Monoid<std::decay_t<decltype(SchemeTraits<S>::ToMonoid(std::declval<S&>()))>>
-;
+concept Scheme = Respects<S, S> && requires(S& s) { s.Reset(); } &&
+                 requires(S& s, SegmentTreeIterator i) { PushTraits::SelfPush(s, i); } &&
+                 requires(const S s) { SchemeTraits<S>::ToMonoid(s); } &&
+                 Monoid<std::decay_t<decltype(SchemeTraits<S>::ToMonoid(std::declval<S&>()))>>;
 
 template <typename T>
 struct NoPush {
@@ -84,4 +83,4 @@ struct Setter {
     T& t;
 };
 
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_CONCEPTS_SCHEME_HPP_

@@ -1,10 +1,11 @@
-#ifndef SEGMENT_TREE_ITERATOR_HPP_
-#define SEGMENT_TREE_ITERATOR_HPP_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_HELPERS_SEGMENT_TREE_ITERATOR_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_HELPERS_SEGMENT_TREE_ITERATOR_HPP_
 
+#include <array>
 #include <concepts>
 
 struct Include {
-    explicit Include(int x): x(x) {
+    explicit Include(int x) : x(x) {
     }
 
     [[nodiscard]] int ConvertLeft() const {
@@ -19,7 +20,7 @@ struct Include {
 };
 
 struct Exclude {
-    explicit Exclude(int x): x(x) {
+    explicit Exclude(int x) : x(x) {
     }
 
     [[nodiscard]] int ConvertLeft() const {
@@ -34,16 +35,21 @@ struct Exclude {
 };
 
 template <typename T>
-concept SegmentBound = requires(T t) { {t.ConvertLeft()} -> std::same_as<int>; {t.ConvertRight()} -> std::same_as<int>; };
+concept SegmentBound = requires(T t) {
+    { t.ConvertLeft() } -> std::same_as<int>;
+    { t.ConvertRight() } -> std::same_as<int>;
+};
 
 struct Segment {
     template <SegmentBound Left, SegmentBound Right>
-    explicit Segment(Left left, Right right): left_(left.ConvertLeft()), right_(right.ConvertRight()) {
+    explicit Segment(Left left, Right right) : left_(left.ConvertLeft()), right_(right.ConvertRight()) {
     }
 
-    explicit Segment(int left, int right): left_(left), right_(right) {}
+    explicit Segment(int left, int right) : left_(left), right_(right) {
+    }
 
-    explicit Segment(int x): left_(x), right_(x + 1) {}
+    explicit Segment(int x) : left_(x), right_(x + 1) {
+    }
 
     [[nodiscard]] Segment CutLeft(int x) const {
         return Segment(x, right_);
@@ -103,7 +109,7 @@ struct Segment {
 
     bool operator==(const Segment&) const = default;
 
-private:
+  private:
     int left_;
     int right_;
 };
@@ -129,11 +135,12 @@ struct SegmentTreeIterator : Segment {
         return index_;
     }
 
-private:
-    SegmentTreeIterator(Segment s, int i): Segment(s), index_(i) {}
+  private:
+    SegmentTreeIterator(Segment s, int i) : Segment(s), index_(i) {
+    }
 
-private:
+  private:
     int index_;
 };
 
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_SCHEME_HELPERS_SEGMENT_TREE_ITERATOR_HPP_

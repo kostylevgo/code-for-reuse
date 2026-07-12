@@ -1,15 +1,15 @@
-#ifndef COMPRESSOR_HPP_
-#define COMPRESSOR_HPP_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_COMPRESSOR_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_COMPRESSOR_HPP_
 
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 template <typename T>
 struct Compressor : private std::vector<T> {
     using Base = std::vector<T>;
 
-public:
-    explicit Compressor(std::vector<T> v): Base(v) {
+  public:
+    explicit Compressor(std::vector<T> v) : Base(v) {
         std::ranges::sort(begin(), end());
         auto [b, e] = std::ranges::unique(begin(), end());
         Base::erase(b, e);
@@ -36,7 +36,7 @@ public:
         return Base::operator[](pos);
     }
 
-private:
+  private:
     auto begin() {
         return Base::begin();
     }
@@ -46,4 +46,4 @@ private:
     }
 };
 
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_COMPRESSOR_HPP_

@@ -1,11 +1,11 @@
-#ifndef CONVEX_HULL_TRICK_HPP_
-#define CONVEX_HULL_TRICK_HPP_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_CHT_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_CHT_HPP_
 
-#include <vector>
 #include <algorithm>
 #include <compare>
-#include <ranges>
 #include <functional>
+#include <ranges>
+#include <vector>
 
 template <typename T>
 struct LinearFunction {
@@ -91,7 +91,7 @@ constexpr I PushCHT(I first, S last_s, Comp better = {}) {
     return last + 2;
 }
 
-template<std::ranges::random_access_range R, class Comp>
+template <std::ranges::random_access_range R, class Comp>
 constexpr std::ranges::borrowed_iterator_t<R> PushCHT(R&& r, Comp comp = {}) {
     return PushCHT(std::ranges::begin(r), std::ranges::end(r), std::move(comp));
 }
@@ -115,22 +115,25 @@ constexpr T GetCHT(I first, S last_s, T at, Comp better = {}) {
             left = l1;
         }
     }
-    return std::ranges::min(std::ranges::subrange(left, right + 1) | std::views::transform([at = std::move(at)](const auto& fn) {return std::invoke(fn, at);}), better);
+    return std::ranges::min(
+        std::ranges::subrange(left, right + 1) |
+            std::views::transform([at = std::move(at)](const auto& fn) { return std::invoke(fn, at); }),
+        better);
 }
 
-template<std::ranges::random_access_range R, class Comp, typename T>
+template <std::ranges::random_access_range R, class Comp, typename T>
 constexpr T GetCHT(R&& r, T at, Comp comp = {}) {
     return GetCHT(std::ranges::begin(r), std::ranges::end(r), std::move(at), std::move(comp));
 }
 
 template <class Better, typename T>
 class ConvexHullTrick : private std::vector<LinearFunction<T>> {
-public:
+  public:
     using Base = std::vector<LinearFunction<T>>;
 
-    using Base::size;
-    using Base::reserve;
     using Base::clear;
+    using Base::reserve;
+    using Base::size;
 
     using Base::begin;
     using Base::end;
@@ -149,7 +152,7 @@ public:
         return GetCHT(*this, std::move(at), Better{});
     }
 
-private:
+  private:
     auto begin() {
         return Base::begin();
     }
@@ -161,11 +164,12 @@ private:
 
 template <class Better, typename T>
 class AddIterator {
-public:
+  public:
     using iterator_category = std::output_iterator_tag;
     using difference_type = std::ptrdiff_t;
 
-    explicit AddIterator(ConvexHullTrick<Better, T>& to): to_(&to) {}
+    explicit AddIterator(ConvexHullTrick<Better, T>& to) : to_(&to) {
+    }
 
     AddIterator& operator++() {
         to_->Add(added_);
@@ -184,7 +188,7 @@ public:
         return &added_;
     }
 
-private:
+  private:
     LinearFunction<T> added_{};
     ConvexHullTrick<Better, T>* to_ = nullptr;
 };
@@ -202,4 +206,4 @@ using MinCHT = ConvexHullTrick<std::less<>, T>;
 template <typename T>
 using MaxCHT = ConvexHullTrick<std::greater<>, T>;
 
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_CHT_HPP_

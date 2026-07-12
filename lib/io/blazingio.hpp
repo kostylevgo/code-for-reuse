@@ -1,6 +1,5 @@
-#ifndef BLAZINGIO
-
-#define BLAZINGIO
+#ifndef CODE_FOR_REUSE_IO_BLAZINGIO_HPP_
+#define CODE_FOR_REUSE_IO_BLAZINGIO_HPP_
 
 // NOLINTBEGIN
 // clang-format off
@@ -73,4 +72,4 @@ V{char*D;B*S;int J;V(){$w(E$(D=(char*)VirtualAlloc(0,536870912,8192,4))E$(Virtua
 // NOLINTEND
 // clang-format on
 
-#endif
+#endif  // CODE_FOR_REUSE_IO_BLAZINGIO_HPP_

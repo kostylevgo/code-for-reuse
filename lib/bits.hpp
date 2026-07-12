@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CODE_FOR_REUSE_BITS_HPP_
+#define CODE_FOR_REUSE_BITS_HPP_
 
 #include <bits/stdc++.h>
 
@@ -11,10 +12,10 @@
 #include "geometry/half_plane_intersection.hpp"
 #include "geometry/pair_operators.hpp"
 #include "geometry/polygons.hpp"
+#include "io/clock.hpp"
 #include "io/debug.hpp"
 #include "io/file.hpp"
 #include "io/io.hpp"
-#include "io/stopwatch.hpp"
 #include "modular_arithmetics/factorials.hpp"
 #include "modular_arithmetics/kapt_inverter.hpp"
 #include "modular_arithmetics/modular.hpp"
@@ -25,3 +26,5 @@
 #include "setup.hpp"
 #include "strings/multihash.hpp"
 #include "strings/suffix_array.hpp"
+
+#endif  // CODE_FOR_REUSE_BITS_HPP_

@@ -1,16 +1,18 @@
-#pragma once
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_SPLAY_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_SPLAY_HPP_
 
-#include <bits/stdc++.h>
+#include <array>
+#include <memory>
+#include <utility>
 
-using namespace std;
-
-struct Node { // Splay tree. Root's pp contains tree's parent.
+struct Node {  // Splay tree. Root's pp contains tree's parent.
     Node* p = 0;
-    Node* pp = 0; // comment if you don't need it
-    array<Node*, 2> c{};
+    Node* pp = 0;  // comment if you don't need it
+    std::array<Node*, 2> c{};
 
     bool flip = 0;
     int cnt = 1;
+
     // more fields if wanted
 
     Node() {
@@ -31,7 +33,7 @@ struct Node { // Splay tree. Root's pp contains tree's parent.
     void pushFlip() {
         if (flip) {
             flip = 0;
-            swap(c[0], c[1]);
+            std::swap(c[0], c[1]);
             if (c[0]) c[0]->flip ^= 1;
             if (c[1]) c[1]->flip ^= 1;
         }
@@ -52,29 +54,34 @@ struct Node { // Splay tree. Root's pp contains tree's parent.
             y->c[h ^ 1] = x;
         }
         z->c[i ^ 1] = this;
-        fix(); x->fix(); y->fix();
+        fix();
+        x->fix();
+        y->fix();
         if (p) p->fix();
-        swap(pp, y->pp);
+        std::swap(pp, y->pp);
     }
 
-    void splay() { // Splay this up to the root. Always finishes without flip set.
-        for (pushFlip(); p; ) {
+    void splay() {  // Splay this up to the root. Always finishes without flip set.
+        for (pushFlip(); p;) {
             if (p->p) p->p->pushFlip();
-            p->pushFlip(); pushFlip();
+            p->pushFlip();
+            pushFlip();
             int c1 = up(), c2 = p->up();
-            if (c2 == -1) p->rot(c1, 2);
-            else p->p->rot(c2, c1 != c2);
+            if (c2 == -1)
+                p->rot(c1, 2);
+            else
+                p->p->rot(c2, c1 != c2);
         }
     }
 
-    Node* first() { // Return the leftmost element of the subtree rooted at this, splayed to the top.
+    Node* first() {  // Return the leftmost element of the subtree rooted at this, splayed to the top.
         pushFlip();
         return c[0] ? c[0]->first() : (splay(), this);
     }
 };
 
 enum class side {
-    left = 1, // sic
+    left = 1,  // sic
     right = 0,
 };
 
@@ -87,7 +94,7 @@ inline Node* merge(Node* le, Node* ri) {
 }
 
 // f: Node* -> side (all "left" nodes & their left subtrees will be in left tree)
-pair<Node*, Node*> split(Node* v, auto&& f) {
+std::pair<Node*, Node*> split(Node* v, auto&& f) {
     if (v == nullptr) return {nullptr, nullptr};
     Node* last = nullptr;
     side last_side;
@@ -108,7 +115,7 @@ pair<Node*, Node*> split(Node* v, auto&& f) {
 }
 
 // example
-inline pair<Node*, Node*> split_k(Node* v, int k) {
+inline std::pair<Node*, Node*> split_k(Node* v, int k) {
     return split(v, [k](Node* v) mutable {
         int left_sz = v->c[0] ? v->c[0]->cnt : 0;
         if (left_sz >= k) {
@@ -118,3 +125,5 @@ inline pair<Node*, Node*> split_k(Node* v, int k) {
         return side::left;
     });
 }
+
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_SPLAY_HPP_

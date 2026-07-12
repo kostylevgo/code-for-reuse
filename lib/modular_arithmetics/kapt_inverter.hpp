@@ -1,12 +1,11 @@
-#pragma once
+#ifndef CODE_FOR_REUSE_MODULAR_ARITHMETICS_KAPT_INVERTER_HPP_
+#define CODE_FOR_REUSE_MODULAR_ARITHMETICS_KAPT_INVERTER_HPP_
+
+#include <vector>
 
 #include "factorials.hpp"
 
-#include <bits/stdc++.h>
-
-using namespace std;
-
-template <int MOD = MOD>
+template <int MOD>
 class Inverter {
     using mint = Modular<MOD>;
 
@@ -19,7 +18,7 @@ class Inverter {
         }
     };
 
-public:
+  public:
     void Reserve(size_t n) {
         mult_.reserve(n);
         mult_inv_.reserve(n);
@@ -32,7 +31,7 @@ public:
         return ans;
     }
 
-private:
+  private:
     void Update(int to) {
         if (to < actual_size) {
             return;
@@ -51,9 +50,9 @@ private:
         return mult_inv_[index] * mult_[index - 1];
     }
 
-private:
-    vector<mint> mult_{1};
-    vector<mint> mult_inv_{1};
+  private:
+    std::vector<mint> mult_{1};
+    std::vector<mint> mult_inv_{1};
     int actual_size = 1;
 };
 
@@ -62,3 +61,5 @@ private:
 //     auto inv_2 = a.inverse(2);
 //     cout << (mint)inv_2 << endl;
 // }
+
+#endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_KAPT_INVERTER_HPP_

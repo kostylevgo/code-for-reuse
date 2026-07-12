@@ -1,31 +1,30 @@
-#ifndef PRIMARY_ROOT_HPP_
-#define PRIMARY_ROOT_HPP_
+#ifndef CODE_FOR_REUSE_NUMBER_THEORY_PRIMARY_ROOT_HPP_
+#define CODE_FOR_REUSE_NUMBER_THEORY_PRIMARY_ROOT_HPP_
 
-#include <utility>
 #include <vector>
 
-#include "utility.hpp"
+#include "factorize.hpp"
+#include "modular_exp.hpp"
 
-constexpr int PrimaryRootBase(int p, auto&& factorize) {
+template <typename T = Factorize>
+constexpr int PrimaryRoot(int p, T&& factor = Factorize{}) {
     if (p == 2) return 1;
     int phi = p - 1;
-    std::vector<std::pair<int, int>> divs;
-    divs = factorize(phi); // or use sieve
+    std::vector divs(std::from_range, factor(phi));
     for (int r = 2; r < p; ++r) {
+        bool is_successful = true;
         for (auto [div, _] : divs) {
             int test = ModularExp(r, phi / div, p);
             if (test == 1) {
-                goto next;
+                is_successful = false;
+                break;
             }
         }
-        return r;
-        next:
+        if (is_successful) {
+            return r;
+        }
     }
     return -1;
 }
 
-constexpr int PrimaryRoot(int p) {
-    return PrimaryRootBase(p, Factorize);
-}
-
-#endif
+#endif  // CODE_FOR_REUSE_NUMBER_THEORY_PRIMARY_ROOT_HPP_

@@ -1,9 +1,9 @@
-#ifndef FENWICK_H_
-#define FENWICK_H_
+#ifndef CODE_FOR_REUSE_DATA_STRUCTURES_FENWICK_HPP_
+#define CODE_FOR_REUSE_DATA_STRUCTURES_FENWICK_HPP_
 
-#include <vector>
 #include <array>
 #include <ranges>
+#include <vector>
 
 inline void Down(int& pos) {
     pos &= pos + 1;
@@ -16,12 +16,13 @@ inline void Up(int& pos) {
 
 template <std::random_access_iterator I, auto pos_transform>
 class IteratorAdapter : public std::iterator_traits<I> {
-public:
+  public:
     using iterator_category = std::forward_iterator_tag;
 
     IteratorAdapter() = default;
 
-    IteratorAdapter(I first, int index): first_(first), pos_(index) {}
+    IteratorAdapter(I first, int index) : first_(first), pos_(index) {
+    }
 
     IteratorAdapter& operator++() {
         pos_transform(pos_);
@@ -55,16 +56,16 @@ public:
         return sentinel.Check(GetPos());
     }
 
-private:
+  private:
     I first_;
-    int pos_;
+    int pos_ = -1;
 };
 
 template <std::random_access_iterator I>
 using FenwickPrefixIterator = IteratorAdapter<I, Down>;
 
 struct FenwickPrefixSentinel {
-    bool Check(int pos) const {
+    static bool Check(int pos) {
         return pos == -1;
     }
 };
@@ -92,7 +93,8 @@ constexpr auto FenwickPrefix(R&& r, int index) {
 
 template <std::random_access_iterator I, std::sentinel_for<I> S>
 constexpr auto FenwickAncestors(I first, S last, int index) {
-    return std::ranges::subrange(FenwickAncestorsIterator(first, index), FenwickAncestorsSentinel{static_cast<int>(std::ranges::distance(first, last))});
+    return std::ranges::subrange(FenwickAncestorsIterator(first, index),
+                                 FenwickAncestorsSentinel{static_cast<int>(std::ranges::distance(first, last))});
 }
 
 template <std::ranges::random_access_range R>
@@ -102,9 +104,10 @@ constexpr auto FenwickAncestors(R&& r, int index) {
 
 template <class T, class Base>
 class GenericFenwick : public Base {
-public:
+  public:
     template <typename... Args>
-    explicit GenericFenwick(Args&&... args): Base(std::forward<Args>(args)...) {}
+    explicit GenericFenwick(Args&&... args) : Base(std::forward<Args>(args)...) {
+    }
 
     using Base::size;
 
@@ -123,7 +126,7 @@ public:
         return ans;
     }
 
-    T GetSegment(int l, int r) { // half-interval with r excluded
+    T GetSegment(int l, int r) {  // half-interval with r excluded
         return Get(r - 1) - Get(l - 1);
     }
 };
@@ -154,4 +157,4 @@ struct MaxUpdater {
     }
 };
 
-#endif
+#endif  // CODE_FOR_REUSE_DATA_STRUCTURES_FENWICK_HPP_

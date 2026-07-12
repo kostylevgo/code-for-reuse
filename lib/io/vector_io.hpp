@@ -1,5 +1,5 @@
-#ifndef VECTOR_IO_HPP_
-#define VECTOR_IO_HPP_
+#ifndef CODE_FOR_REUSE_IO_VECTOR_IO_HPP_
+#define CODE_FOR_REUSE_IO_VECTOR_IO_HPP_
 
 #include <iostream>
 #include <vector>
@@ -11,6 +11,7 @@ std::istream& operator>>(std::istream& is, std::vector<T>& a) {
     }
     return is;
 }
+
 template <class T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& a) {
     bool is_first = true;
@@ -22,7 +23,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& a) {
         }
         os << x;
     }
-    return os << endl;
+    return os << std::endl;
 }
 
-#endif
+#endif  // CODE_FOR_REUSE_IO_VECTOR_IO_HPP_
