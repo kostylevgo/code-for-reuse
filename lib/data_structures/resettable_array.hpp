@@ -1,19 +1,17 @@
 #pragma once
 
-#include <array>
-#include <vector>
-
-template <class T, size_t N>
-class ResettableArray : public array<T, N> {
+template <typename T, template <typename> typename Container>
+class ResettableArray : private Container<T> {
 public:
-    ResettableArray(): array<T, N>() {}
+    ResettableArray() = default;
+    explicit ResettableArray(int n): Container<T>(n), timestamps_(n) {}
 
-    T& operator[](size_t i) {
+    T& operator[](int i) {
         if (timestamps_[i] < t_) {
             timestamps_[i] = t_;
-            (*this)[i] = T{};
+            AsContainer()[i] = T{};
         }
-        return (*this)[i];
+        return AsContainer()[i];
     }
 
     void Reset() {
@@ -21,6 +19,11 @@ public:
     }
 
 private:
+    Container<T>& AsContainer() const {
+        return static_cast<Container<T>&>(*this);
+    }
+
+private:
     int t_ = 1;
-    array<int, N> timestamps_{};
+    Container<int> timestamps_;
 };

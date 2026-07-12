@@ -1,10 +1,7 @@
-#pragma once
-
-#include <bits/stdc++.h>
+#ifndef MULTIHASH_HPP_
+#define MULTIHASH_HPP_
 
 #include "../modular_arithmetics/modular.hpp"
-
-using namespace std;
 
 template <int...>
 struct HashValue {};
@@ -74,3 +71,5 @@ struct hash<HashValue<MODS...>> {
 }  // namespace std
 
 using Hash = HashValue<1'000'000'007, 1'000'000'009>;
+
+#endif

@@ -1,13 +1,17 @@
-#pragma once
+#ifndef SIEVE_HPP_
+#define SIEVE_HPP_
 
-#include <bits/stdc++.h>
+#include <array>
+#include <algorithm>
+#include <vector>
+#include <utility>
 
-using namespace std;
+#include "utility.hpp"
 
 template <int SIEVE>
 class Sieve {
 public:
-    Sieve() {
+    constexpr Sieve() {
         for (int i = 2; i < SIEVE; ++i) {
             if (low_div[i] == 0) {
                 low_div[i] = i;
@@ -19,12 +23,12 @@ public:
         }
     }
 
-    bool is_prime(int x) {
+    [[nodiscard]] constexpr bool IsPrime(int x) const {
         return x >= 2 && low_div[x] == x;
     }
 
-    vector<pair<int, int>> factorize(int x) {
-        vector<pair<int, int>> ans;
+    [[nodiscard]] constexpr std::vector<std::pair<int, int>> Factorize(int x) const {
+        std::vector<std::pair<int, int>> ans;
         while (x > 1) {
             int div = low_div[x], pw = 0;
             while (x % div == 0) {
@@ -37,7 +41,9 @@ public:
     }
 
 private:
-    array<int, SIEVE> low_div;
-    array<int, max(10'000, SIEVE / 10)> primes;
+    std::array<int, SIEVE> low_div;
+    std::array<int, std::max(10'000, SIEVE / 10)> primes;
     int pr_sz = 0;
 };
+
+#endif
