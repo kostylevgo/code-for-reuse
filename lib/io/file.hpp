@@ -18,7 +18,7 @@ inline void setOut(const std::string& s) {
 
 inline void setIO(const std::string& s = "") {
 #ifndef BLAZINGIO
-    std::cin.tie(0)->sync_with_stdio(0);  // unsync C / C++ I/O streams
+    std::cin.tie(nullptr)->sync_with_stdio(false);  // unsync C / C++ I/O streams
     std::cout << std::setprecision(12) << std::fixed;
     // cin.exceptions(cin.failbit);
     // throws exception when do smth illegal
@@ -26,8 +26,7 @@ inline void setIO(const std::string& s = "") {
 #endif
     if (!s.empty()) setIn(s + ".in"), setOut(s + ".out");  // for old USACO
 #ifdef LOCAL
-    else
-        setIn("../in.txt"), setOut("../out.txt");
+    else setIn("../in.txt"), setOut("../out.txt");
 #endif
 }
 

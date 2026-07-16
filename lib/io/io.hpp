@@ -1,6 +1,8 @@
 #ifndef CODE_FOR_REUSE_IO_IO_HPP_
 #define CODE_FOR_REUSE_IO_IO_HPP_
 
+// source: Benq
+
 #include <array>
 #include <iostream>
 #include <ranges>
@@ -45,7 +47,7 @@ void re(Ts&... ts) {
     t args;             \
     re(args);
 
-#define de(t, name, args...) \
+#define den(t, name, args...) \
     t name(args);            \
     re(name);
 

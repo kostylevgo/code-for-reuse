@@ -1,6 +1,8 @@
 #ifndef CODE_FOR_REUSE_IO_DEBUG_HPP_
 #define CODE_FOR_REUSE_IO_DEBUG_HPP_
 
+// source: Benq
+
 #include "io.hpp"
 
 inline namespace Debug {

@@ -5,8 +5,6 @@
 #include <iomanip>
 #include <iostream>
 
-#include "debug.hpp"
-
 class Clock {
   public:
     // https://stackoverflow.com/questions/47980498/accurate-c-c-clock-on-a-multi-core-processor-with-auto-overclock?noredirect=1&lq=1
@@ -46,8 +44,7 @@ struct PrintCallback {
 
     void operator()(double t) const {
         FlagGuard<std::cerr> guard;
-        std::cerr << std::setprecision(3) << std::fixed;
-        Writer<std::cerr, false, true>{}.print_with_sep(" ", "TIME:", t, "sec");
+        std::cerr << std::setprecision(3) << std::fixed << "TIME: " << t << " sec" << std::endl;
     }
 };
 

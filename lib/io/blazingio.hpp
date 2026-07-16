@@ -7,6 +7,7 @@
 // https://github.com/purplesyringa/blazingio. Refer to the repository for
 // a human-readable version and documentation.
 // Options: cbfoiedrhWLMXaIaAn
+#define BLAZINGIO
 #define M$(x,...)_mm256_##x##_epi8(__VA_ARGS__)
 #define $u(...)__VA_ARGS__
 #if __APPLE__

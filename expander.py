@@ -23,7 +23,7 @@ def parse_include_directories(cmake_root: Path) -> list[Path]:
     """
     Parse CMakeLists.txt at cmake_root and extract all directory arguments
     from include_directories() commands. Returns a list of absolute paths.
-    Assumes no CMake variables are used and the syntax is simple.
+    Handles simple variable expansion for ${VAR} using set(...) definitions.
     """
     cmake_file = cmake_root / "CMakeLists.txt"
     if not cmake_file.is_file():
@@ -35,25 +35,55 @@ def parse_include_directories(cmake_root: Path) -> list[Path]:
         print(f"Warning: could not read {cmake_file}: {e}", file=sys.stderr)
         return []
 
-    # Find all include_directories(...) blocks (handles multi-line)
+    # Strip comments (remove everything after #, but not inside strings)
+    # For simplicity, we assume # is always a comment (not inside quotes)
+    clean_lines = []
+    for line in content.splitlines():
+        if '#' in line:
+            line = line.split('#')[0]
+        clean_lines.append(line)
+    content = '\n'.join(clean_lines)
+
+    # Build variable map from set(...) commands
+    var_map = {}
+    set_pattern = re.compile(r'set\s*\(\s*(\w+)\s+([^)]+)\)', re.IGNORECASE)
+    for match in set_pattern.finditer(content):
+        var_name = match.group(1)
+        value = match.group(2).strip()
+        # Strip surrounding quotes
+        if (value.startswith('"') and value.endswith('"')) or \
+                (value.startswith("'") and value.endswith("'")):
+            value = value[1:-1]
+        var_map[var_name] = value
+
+    # Function to expand ${VAR} in a string
+    def expand_vars(s: str) -> str:
+        def repl(m):
+            v = m.group(1)
+            return var_map.get(v, m.group(0))
+        return re.sub(r'\$\{([^}]+)\}', repl, s)
+
+    # Find all include_directories(...) blocks
     pattern = r'include_directories\s*\((.*?)\)'
     matches = re.findall(pattern, content, re.DOTALL)
 
     dirs = []
     for match in matches:
-        # Split by whitespace and commas, ignore empty tokens
+        # Split by whitespace and commas
         tokens = re.split(r'[\s,]+', match.strip())
         for token in tokens:
             if not token:
                 continue
-            # Strip surrounding quotes if any
-            token = token.strip('"\'')
-            if token[0] == '/':
-                # Resolve absolute path
-                path = Path(token).resolve()
+            # Expand variables
+            token_expanded = expand_vars(token)
+            # Remove outer quotes
+            token_expanded = token_expanded.strip('"\'')
+            # Resolve path
+            if token_expanded.startswith('/') or (len(token_expanded) > 1 and token_expanded[1] == ':'):
+                # Absolute path (Unix or Windows)
+                path = Path(token_expanded).resolve()
             else:
-                # Resolve relative to cmake_root (absolute path)
-                path = (cmake_root / token).resolve()
+                path = (cmake_root / token_expanded).resolve()
             if path.is_dir():
                 dirs.append(path)
     return dirs
@@ -245,8 +275,9 @@ def main():
     output_lines = post_process(output_lines)
     result = '\n'.join(output_lines)
 
-    # Write to stdout (no extra newline)
-    sys.stdout.write(result)
+    # Write to output file
+    with open(args.file + ".expanded", "w") as out:
+        out.write(result)
 
     # Copy to clipboard unless disabled
     if not args.no_clipboard:
