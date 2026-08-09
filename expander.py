@@ -272,7 +272,9 @@ def main():
     output_lines = expand_file(main_file, included_files, seen_angle_includes)
 
     # Post‑process
-    output_lines = post_process(output_lines)
+    output_lines = (['// produced by expander.py',
+                     '// source: https://github.com/kostylevgo/code-for-reuse/blob/main/expander.py']
+                     + post_process(output_lines))
     result = '\n'.join(output_lines)
 
     # Write to output file

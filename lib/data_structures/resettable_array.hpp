@@ -1,34 +1,31 @@
 #ifndef CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_
 #define CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_
 
-template <typename T, template <typename> typename Container>
-class ResettableArray : private Container<T> {
+#include "../utility/used_counter.hpp"
+
+template <typename T>
+class ResettableArray {
   public:
     ResettableArray() = default;
 
-    explicit ResettableArray(int n) : Container<T>(n), timestamps_(n) {
+    explicit ResettableArray(int n) : items_(n), used_(n) {
     }
 
     T& operator[](int i) {
-        if (timestamps_[i] < t_) {
-            timestamps_[i] = t_;
-            AsContainer()[i] = T{};
+        if (!used_[i]) {
+            used_.Use(i);
+            items_[i] = T{};
         }
-        return AsContainer()[i];
+        return items_[i];
     }
 
     void Reset() {
-        ++t_;
+        used_.Reset();
     }
 
   private:
-    Container<T>& AsContainer() const {
-        return static_cast<Container<T>&>(*this);
-    }
-
-  private:
-    int t_ = 1;
-    Container<int> timestamps_;
+    std::vector<T> items_;
+    UsedCounter used_;
 };
 
 #endif  // CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_
