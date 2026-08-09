@@ -71,7 +71,7 @@ def strip_guards_and_pragma(lines):
 # ----------------------------------------------------------------------
 # Helper: run clang-format on a file
 # ----------------------------------------------------------------------
-def run_tool(filepath: Path, tool: str, args: list[str]) -> bool:
+def run_tool(tool: str, args: list[str]) -> bool:
     """
     Run the given tool on the given file.
     Returns True if successful, False otherwise.
@@ -91,7 +91,7 @@ def run_tool(filepath: Path, tool: str, args: list[str]) -> bool:
 
     try:
         # Run clang-format -i on the file
-        subprocess.run([tool] + args + [str(filepath)],
+        subprocess.run([tool] + args,
                        check=True,
                        text=True)
     except subprocess.CalledProcessError as e:
@@ -100,7 +100,7 @@ def run_tool(filepath: Path, tool: str, args: list[str]) -> bool:
 
 
 def run_clang_format(filepath: Path) -> bool:
-    return run_tool(filepath, 'clang-format', ['-i'])
+    return run_tool('clang-format', ['-i', str(filepath)])
 
-def run_clang_tidy(filepath: Path) -> bool:
-    return run_tool(filepath, 'clang-tidy', ['-quiet'])
+def run_clang_tidy(filepath: Path, lib: str) -> bool:
+    return run_tool('clang-tidy', ['-quiet', f"--extra-arg=-I{lib}", str(filepath)])

@@ -3,3 +3,5 @@
 **/.cache
 **/in.txt
 **/out.txt
+*.expanded
+__pycache__

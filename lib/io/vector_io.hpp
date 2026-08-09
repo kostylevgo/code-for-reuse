@@ -23,7 +23,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& a) {
         }
         os << x;
     }
-    return os << std::endl;
+    return os << '\n';
 }
 
 #endif  // CODE_FOR_REUSE_IO_VECTOR_IO_HPP_

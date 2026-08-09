@@ -1,7 +1,7 @@
 #ifndef CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_
 #define CODE_FOR_REUSE_DATA_STRUCTURES_RESETTABLE_ARRAY_HPP_
 
-#include "../utility/used_counter.hpp"
+#include "used_counter.hpp"
 
 template <typename T>
 class ResettableArray {

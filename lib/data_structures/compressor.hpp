@@ -9,7 +9,9 @@ struct Compressor : private std::vector<T> {
     using Base = std::vector<T>;
 
   public:
-    explicit Compressor(std::vector<T> v) : Base(v) {
+    Compressor() = default;
+
+    explicit Compressor(std::vector<T> v) : Base(std::move(v)) {
         std::ranges::sort(begin(), end());
         auto [b, e] = std::ranges::unique(begin(), end());
         Base::erase(b, e);

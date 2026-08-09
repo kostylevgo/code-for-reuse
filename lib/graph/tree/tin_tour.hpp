@@ -1,8 +1,14 @@
-//
-// Created by gleb on 09.08.2026.
-//
+#ifndef CODE_FOR_REUSE_GRAPH_TREE_TIN_TOUR_HPP_
+#define CODE_FOR_REUSE_GRAPH_TREE_TIN_TOUR_HPP_
 
-#ifndef CODE_FOR_REUSE_TIN_TOUR_HPP
-#define CODE_FOR_REUSE_TIN_TOUR_HPP
+#include "tree.hpp"
+#include "utils/permutations.hpp"
 
-#endif //CODE_FOR_REUSE_TIN_TOUR_HPP
+struct TinTour : std::vector<int> {
+    using vector::vector;
+
+    explicit TinTour(const Tree& t) : vector(Inverse(t.tin)) {
+    }
+};
+
+#endif  // CODE_FOR_REUSE_GRAPH_TREE_TIN_TOUR_HPP_

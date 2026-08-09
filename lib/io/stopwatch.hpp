@@ -1,5 +1,5 @@
-#ifndef CODE_FOR_REUSE_IO_CLOCK_HPP_
-#define CODE_FOR_REUSE_IO_CLOCK_HPP_
+#ifndef CODE_FOR_REUSE_IO_STOPWATCH_HPP_
+#define CODE_FOR_REUSE_IO_STOPWATCH_HPP_
 
 #include <chrono>
 #include <iomanip>
@@ -50,4 +50,4 @@ struct PrintCallback {
 
 using ChimingClock = Stopwatch<PrintCallback>;
 
-#endif  // CODE_FOR_REUSE_IO_CLOCK_HPP_
+#endif  // CODE_FOR_REUSE_IO_STOPWATCH_HPP_

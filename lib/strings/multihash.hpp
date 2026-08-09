@@ -1,7 +1,7 @@
 #ifndef CODE_FOR_REUSE_STRINGS_MULTIHASH_HPP_
 #define CODE_FOR_REUSE_STRINGS_MULTIHASH_HPP_
 
-#include "../modular_arithmetics/modular.hpp"
+#include "modular_arithmetics/modular.hpp"
 
 template <int...>
 struct HashValue {};

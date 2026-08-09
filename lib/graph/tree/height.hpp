@@ -1,8 +1,18 @@
-//
-// Created by gleb on 09.08.2026.
-//
+#ifndef CODE_FOR_REUSE_GRAPH_TREE_HEIGHT_HPP_
+#define CODE_FOR_REUSE_GRAPH_TREE_HEIGHT_HPP_
 
-#ifndef CODE_FOR_REUSE_HEIGHT_HPP
-#define CODE_FOR_REUSE_HEIGHT_HPP
+#include "tin_tour.hpp"
 
-#endif //CODE_FOR_REUSE_HEIGHT_HPP
+struct Height : std::vector<int> {
+    using vector::vector;
+
+    explicit Height(const Tree& t, const TinTour& eul) : vector(t.size()) {
+        for (auto v : eul) {
+            for (auto u : t[v]) {
+                (*this)[u] = (*this)[v] + 1;
+            }
+        }
+    }
+};
+
+#endif  // CODE_FOR_REUSE_GRAPH_TREE_HEIGHT_HPP_

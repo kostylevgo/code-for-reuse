@@ -162,7 +162,7 @@ def main():
 
     for filepath in header_files:
         print (f"Validating {filepath}")
-        run_clang_tidy(filepath)
+        run_clang_tidy(filepath, str(X))
 
     print("Done.")
 

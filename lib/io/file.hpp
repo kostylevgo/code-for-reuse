@@ -26,7 +26,8 @@ inline void setIO(const std::string& s = "") {
 #endif
     if (!s.empty()) setIn(s + ".in"), setOut(s + ".out");  // for old USACO
 #ifdef LOCAL
-    else setIn("../in.txt"), setOut("../out.txt");
+    else
+        setIn("../in.txt"), setOut("../out.txt");
 #endif
 }
 

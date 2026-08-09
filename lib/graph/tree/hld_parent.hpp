@@ -1,8 +1,24 @@
-//
-// Created by gleb on 09.08.2026.
-//
+#ifndef CODE_FOR_REUSE_GRAPH_TREE_HLD_PARENT_HPP_
+#define CODE_FOR_REUSE_GRAPH_TREE_HLD_PARENT_HPP_
 
-#ifndef CODE_FOR_REUSE_HLD_HPP
-#define CODE_FOR_REUSE_HLD_HPP
+#include <numeric>
 
-#endif  // CODE_FOR_REUSE_HLD_HPP
+#include "tin_tour.hpp"
+
+struct HLDParent : std::vector<int> {
+    using vector::vector;
+
+    explicit HLDParent(const Tree& t, const TinTour& eul) : vector(t.size()) {
+        std::iota(begin(), end(), 0);
+        if (t.empty()) {
+            return;
+        }
+        for (auto v : eul) {
+            if (!t[v].empty()) {
+                (*this)[t[v][0]] = (*this)[v];
+            }
+        }
+    }
+};
+
+#endif  // CODE_FOR_REUSE_GRAPH_TREE_HLD_PARENT_HPP_

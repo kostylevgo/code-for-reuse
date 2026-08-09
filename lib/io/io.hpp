@@ -48,7 +48,7 @@ void re(Ts&... ts) {
     re(args);
 
 #define den(t, name, args...) \
-    t name(args);            \
+    t name(args);             \
     re(name);
 
 template <auto& os, bool debug, bool print_nd>

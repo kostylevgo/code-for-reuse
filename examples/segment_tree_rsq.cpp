@@ -14,9 +14,9 @@ typedef long double ld;
 constexpr int INF = 1'000'000'009;
 constexpr ll INF18 = 1'000'000'000'000'000'018;
 
-#include "io/vector_io.hpp"
+#include "utils/container_as_function.hpp"
 #include "data_structures/scheme/top_down_segment_tree.hpp"
-#include "functional/container_as_function.hpp"
+#include "io/vector_io.hpp"
 
 struct SumMonoid : NoPush<SumMonoid> {
     SumMonoid() = default;

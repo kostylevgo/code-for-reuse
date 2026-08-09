@@ -15,10 +15,13 @@ class TopDownSegmentTree : private SchemeTraits<S>, private PushTraits {
     using I = SegmentTreeIterator;
 
   public:
-    explicit TopDownSegmentTree(size_t n) : n_(static_cast<int>(n)), segments_(ArraySize(n)) {
+    TopDownSegmentTree() : TopDownSegmentTree(0) {
     }
 
-    TopDownSegmentTree(size_t n, const auto& initializer) : TopDownSegmentTree(n) {
+    explicit TopDownSegmentTree(int n) : n_(n), segments_(ArraySize(n)) {
+    }
+
+    TopDownSegmentTree(int n, const auto& initializer) : TopDownSegmentTree(n) {
         Build(RootIterator(), initializer);
     }
 
