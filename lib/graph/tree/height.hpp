@@ -4,7 +4,7 @@
 #include "tin_tour.hpp"
 
 struct Height : std::vector<int> {
-    using vector::vector;
+    Height() = default;
 
     explicit Height(const Tree& t, const TinTour& eul) : vector(t.size()) {
         for (auto v : eul) {

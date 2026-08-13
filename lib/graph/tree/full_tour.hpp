@@ -5,17 +5,20 @@
 
 // first entry is not flipped, others are
 struct FullTour : std::vector<int> {
-    using vector::vector;
+    FullTour() = default;
 
     explicit FullTour(const Tree& t, const TinToutTour& eul) {
         if (eul.empty()) {
             return;
         }
         reserve(eul.size() - 1);
+        vector<int> stack;
         for (auto v : std::ranges::subrange(eul.begin(), eul.end() - 1)) {
             if (IsFlipped(v)) {
-                push_back(Flip(t.p[Flip(v)]));
+                stack.pop_back();
+                push_back(Flip(stack.back()));
             } else {
+                stack.push_back(v);
                 push_back(v);
             }
         }

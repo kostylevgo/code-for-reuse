@@ -6,7 +6,7 @@
 #include "tin_tour.hpp"
 
 struct HLDParent : std::vector<int> {
-    using vector::vector;
+    HLDParent() = default;
 
     explicit HLDParent(const Tree& t, const TinTour& eul) : vector(t.size()) {
         std::iota(begin(), end(), 0);

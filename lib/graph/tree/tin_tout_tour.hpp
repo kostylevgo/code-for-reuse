@@ -34,16 +34,16 @@ std::vector<TourEntry> CreateEntries(const auto& r, const Tree& t) {
 
 // tins are not flipped, touts are
 struct TinToutTour : std::vector<int> {
-    using vector::vector;
+    TinToutTour() = default;
 
     explicit TinToutTour(const Tree& t) : vector(2 * t.size()) {
         auto entries = CreateEntries(std::views::iota(0, (int)t.size()), t);
 
         std::vector<int> buf(t.size() + 1);
         std::vector<TourEntry> temp(2 * t.size());
-        RadixSort(entries, temp.begin(), buf.begin(), &TourEntry::time_key);
+        RadixSort(entries, temp.begin(), buf.begin(), &TourEntry::type_key);
         buf.assign(t.size() + 1, 0);
-        RadixSort(temp, entries.begin(), buf.begin(), &TourEntry::type_key);
+        RadixSort(temp, entries.begin(), buf.begin(), &TourEntry::time_key);
 
         Fill(entries);
     }

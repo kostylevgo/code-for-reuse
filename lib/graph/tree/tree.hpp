@@ -7,12 +7,6 @@
 
 #include "utils/container_as_function.hpp"
 
-struct TinTour;
-struct TinToutTour;
-struct FullTour;
-struct Height;
-struct HLDParent;
-
 struct Tree : std::vector<std::vector<int>> {
     using Base = vector;
     static constexpr int Root = 0;

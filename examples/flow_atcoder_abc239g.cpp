@@ -6,14 +6,14 @@
 
 using namespace std;
 
+#include "../lib/graph/flow/flow.hpp"
 #include "io/vector_io.hpp"
-#include "graph/flow.hpp"
 
 void solve() {
     int n, m;
     cin >> n >> m;
     Flow f;
-    vector<Flow::Vertex> in(n), out(n);
+    vector<Vertex> in(n), out(n);
     in[0] = f.AddVertex();
     out[0] = f.S;
     in[n - 1] = f.T;
@@ -29,7 +29,7 @@ void solve() {
         f.AddEdge(out[a], in[b], kMax);
         f.AddEdge(out[b], in[a], kMax);
     }
-    vector<Flow::Edge> edges(n);
+    vector<Edge> edges(n);
     for (int i = 0; i < n; ++i) {
         Cap c;
         cin >> c;

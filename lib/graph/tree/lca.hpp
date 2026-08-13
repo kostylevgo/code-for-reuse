@@ -6,7 +6,7 @@
 
 inline int LCA(int u, int v, const Tree& t, const HLDParent& hld, const Height& h) {
     while (hld[u] != hld[v]) {
-        if (h[hld[u]] > h[hld[v]]) {
+        if (h[hld[u]] < h[hld[v]]) {
             std::swap(u, v);
         }
         u = t.p[hld[u]];

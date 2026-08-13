@@ -5,7 +5,7 @@
 #include "utils/permutations.hpp"
 
 struct TinTour : std::vector<int> {
-    using vector::vector;
+    TinTour() = default;
 
     explicit TinTour(const Tree& t) : vector(Inverse(t.tin)) {
     }
