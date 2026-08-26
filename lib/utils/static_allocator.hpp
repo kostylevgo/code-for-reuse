@@ -1,5 +1,5 @@
-#ifndef CODE_FOR_REUSE_UTILS_ALLOCATOR_HPP_
-#define CODE_FOR_REUSE_UTILS_ALLOCATOR_HPP_
+#ifndef CODE_FOR_REUSE_UTILS_STATIC_ALLOCATOR_HPP_
+#define CODE_FOR_REUSE_UTILS_STATIC_ALLOCATOR_HPP_
 
 #include <utility>
 
@@ -19,4 +19,4 @@ struct StaticAllocator {
     static inline int ptr_ = 0;
 };
 
-#endif  // CODE_FOR_REUSE_UTILS_ALLOCATOR_HPP_
+#endif  // CODE_FOR_REUSE_UTILS_STATIC_ALLOCATOR_HPP_
