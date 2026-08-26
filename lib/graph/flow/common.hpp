@@ -172,8 +172,8 @@ struct GraphHolder : EdgeHolder<EdgeData> {
         Edge to_e{Edges()};
         edges.emplace_back(to, cap);
         edges.emplace_back(from, 0);
-        g[from.v].emplace_back(to_e);
-        g[to.v].emplace_back(Backward(to_e));
+        g[from.v].push_back(to_e);
+        g[to.v].push_back(Backward(to_e));
         return to_e;
     }
 
@@ -181,8 +181,8 @@ struct GraphHolder : EdgeHolder<EdgeData> {
         Edge to_e{Edges()};
         edges.emplace_back(to, cap, cost);
         edges.emplace_back(from, 0, -cost);
-        g[from.v].emplace_back(to_e);
-        g[to.v].emplace_back(Backward(to_e));
+        g[from.v].push_back(to_e);
+        g[to.v].push_back(Backward(to_e));
         return to_e;
     }
 
