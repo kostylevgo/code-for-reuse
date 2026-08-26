@@ -1,3 +1,6 @@
+#ifndef CODE_FOR_REUSE_MODULAR_ARITHMETICS_FFT_INVERSE_HPP_
+#define CODE_FOR_REUSE_MODULAR_ARITHMETICS_FFT_INVERSE_HPP_
+
 #include "fft.hpp"
 
 template <Mint mint>
@@ -31,3 +34,5 @@ std::vector<mint> Inverse(std::vector<mint> a, int n) {
     result.resize(n);
     return result;
 }
+
+#endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_FFT_INVERSE_HPP_

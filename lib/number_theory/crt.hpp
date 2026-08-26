@@ -1,5 +1,8 @@
-#include <memory>
+#ifndef CODE_FOR_REUSE_NUMBER_THEORY_CRT_HPP_
+#define CODE_FOR_REUSE_NUMBER_THEORY_CRT_HPP_
+
 #include <cstdint>
+#include <memory>
 
 #include "exgcd.hpp"
 
@@ -9,3 +12,5 @@ int64_t crt(int64_t a, int64_t m, int64_t b, int64_t n) {
     x = (b - a) % n * x % n / g * m + a;
     return x < 0 ? x + m * n / g : x;
 }
+
+#endif  // CODE_FOR_REUSE_NUMBER_THEORY_CRT_HPP_

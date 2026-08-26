@@ -1,6 +1,9 @@
-#include "modular.hpp"
+#ifndef CODE_FOR_REUSE_MODULAR_ARITHMETICS_BATCH_INVERSE_HPP_
+#define CODE_FOR_REUSE_MODULAR_ARITHMETICS_BATCH_INVERSE_HPP_
 
 #include <vector>
+
+#include "modular.hpp"
 
 template <Mint mint>
 void Inverse(std::vector<mint>& v) {
@@ -18,3 +21,5 @@ void Inverse(std::vector<mint>& v) {
         v[i] = inverse_factorials[i + 1] * factorials[i];
     }
 }
+
+#endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_BATCH_INVERSE_HPP_

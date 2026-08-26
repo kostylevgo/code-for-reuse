@@ -1,6 +1,9 @@
-#include "fft.hpp"
+#ifndef CODE_FOR_REUSE_MODULAR_ARITHMETICS_ONLINE_FFT_HPP_
+#define CODE_FOR_REUSE_MODULAR_ARITHMETICS_ONLINE_FFT_HPP_
 
 #include <unordered_map>
+
+#include "fft.hpp"
 
 auto Square(auto x) {
     return x * x;
@@ -68,3 +71,5 @@ struct OnlineFFT {
         swap(a_queries, b_queries);
     }
 };
+
+#endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_ONLINE_FFT_HPP_

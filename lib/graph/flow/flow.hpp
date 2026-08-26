@@ -1,8 +1,8 @@
 #ifndef CODE_FOR_REUSE_GRAPH_FLOW_FLOW_HPP_
 #define CODE_FOR_REUSE_GRAPH_FLOW_FLOW_HPP_
 
-#include <deque>
 #include <cstdint>
+#include <deque>
 
 #include "common.hpp"
 

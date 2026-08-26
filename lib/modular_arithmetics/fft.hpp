@@ -1,7 +1,11 @@
-#include "primary_root.hpp"
+#ifndef CODE_FOR_REUSE_MODULAR_ARITHMETICS_FFT_HPP_
+#define CODE_FOR_REUSE_MODULAR_ARITHMETICS_FFT_HPP_
+
+#include <algorithm>
 #include <bit>
 #include <vector>
-#include <algorithm>
+
+#include "primary_root.hpp"
 
 int Log(int size) {
     if (size == 0) {
@@ -93,3 +97,5 @@ std::vector<mint> Multiply(std::vector<mint> a, std::vector<mint> b) {
     a.resize(result_size);
     return a;
 }
+
+#endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_FFT_HPP_
