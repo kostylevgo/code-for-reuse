@@ -1,6 +1,7 @@
 #ifndef CODE_FOR_REUSE_GRAPH_TREE_HLD_PARENT_HPP_
 #define CODE_FOR_REUSE_GRAPH_TREE_HLD_PARENT_HPP_
 
+
 #include <numeric>
 
 #include "tin_tour.hpp"
@@ -21,4 +22,5 @@ struct HLDParent : std::vector<int> {
     }
 };
 
-#endif  // CODE_FOR_REUSE_GRAPH_TREE_HLD_PARENT_HPP_
+
+#endif // CODE_FOR_REUSE_GRAPH_TREE_HLD_PARENT_HPP_

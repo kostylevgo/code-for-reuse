@@ -125,10 +125,6 @@ class GenericFenwick : public Base {
         }
         return ans;
     }
-
-    T GetSegment(int l, int r) {  // half-interval with r excluded
-        return Get(r - 1) - Get(l - 1);
-    }
 };
 
 template <class T>

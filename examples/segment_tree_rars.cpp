@@ -15,18 +15,12 @@ constexpr int INF = 1'000'000'009;
 constexpr ll INF18 = 1'000'000'000'000'000'018;
 
 #include "utils/container_as_function.hpp"
-#include "data_structures/scheme/top_down_segment_tree.hpp"
+#include "data_structures/monoid/top_down_segment_tree.hpp"
+#include "data_structures/monoid/bottom_up_segment_tree.hpp"
 #include "io/vector_io.hpp"
 #include "modular_arithmetics/modular.hpp"
+
 using mint = Modular<998244353>;
-
-struct SumMonoid {
-    mint x = 0;
-
-    static SumMonoid Combine(SumMonoid a, SumMonoid b) {
-        return SumMonoid{a.x + b.x};
-    }
-};
 
 struct Affine {
     mint b = 1;
@@ -38,34 +32,27 @@ struct Affine {
         down.b *= b;
     }
 
-    void Push(SumMonoid& s, SegmentTreeIterator iter) const {
-        s.x *= b;
-        s.x += c * iter.Length();
+    void Push(mint& s, auto iter) const {
+        s *= b;
+        s += c * iter.Length();
     }
 };
 
 struct AffineScheme {
+    mint s;
     Affine f;
-    SumMonoid s;
 
-    SumMonoid& Get() {
-        return s;
-    }
-
-    const SumMonoid& Get() const {
-        return s;
-    }
-
-    void Push(AffineScheme& down) const {
+    void Push(AffineScheme& down, auto) const {
         f.Push(down.f);
     }
 
-    void SelfPush(SegmentTreeIterator i) {
-        f.Push(s, i);
+    void Push(auto iter) {
+        f.Push(s, iter);
+        f = Affine{};
     }
 
-    void Reset() {
-        f = Affine{};
+    friend AffineScheme operator+(AffineScheme a, AffineScheme b) {
+        return {a.s + b.s, {}};
     }
 };
 
@@ -74,7 +61,9 @@ void solve() {
     cin >> n >> m;
     vector<mint> a(n);
     cin >> a;
-    TopDownSegmentTree<AffineScheme> st(n, AsFunction(a));
+    // TopDownSegmentTree<AffineScheme>
+    BottomUpSegmentTree<AffineScheme>
+    st(n, AsFunction(a));
     while (m--) {
         int t;
         cin >> t;
@@ -82,12 +71,12 @@ void solve() {
             int l, r;
             mint b, c;
             cin >> l >> r >> b >> c;
-            AffineScheme push{Affine{b, c}, {}};
-            st.Update(l, r, push);
+            AffineScheme push{{}, Affine{b, c}};
+            st.Push(l, r, push);
         } else {
             int l, r;
             cin >> l >> r;
-            cout << st.Get(l, r).x << endl;
+            cout << st.Get(l, r).s << endl;
         }
     }
 }

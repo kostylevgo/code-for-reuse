@@ -15,36 +15,29 @@ constexpr int INF = 1'000'000'009;
 constexpr ll INF18 = 1'000'000'000'000'000'018;
 
 #include "utils/container_as_function.hpp"
-#include "data_structures/scheme/top_down_segment_tree.hpp"
+#include "data_structures/monoid/no_push.hpp"
+#include "data_structures/monoid/setter.hpp"
+#include "data_structures/monoid/top_down_segment_tree.hpp"
+#include "data_structures/monoid/bottom_up_segment_tree.hpp"
 #include "io/vector_io.hpp"
-
-struct SumMonoid : NoPush<SumMonoid> {
-    SumMonoid() = default;
-
-    explicit SumMonoid(ll x): val(x) {}
-
-    static SumMonoid Combine(const SumMonoid& a, const SumMonoid& b) {
-        return SumMonoid{a.val + b.val};
-    }
-
-    ll val = 0;
-};
 
 void solve() {
     int n, m;
     cin >> n >> m;
     vector<int> a(n);
     cin >> a;
-    TopDownSegmentTree<SumMonoid> d(n, AsFunction(a));
+    // TopDownSegmentTree<NoPush<ll>>
+    BottomUpSegmentTree<NoPush<ll>>
+    d(n, AsFunction(a));
     while (m--) {
         int t, x, y;
         cin >> t >> x >> y;
         --x;
         if (t == 0) {
             // cout << d.Get(x, y).val << endl;
-            cout << d.Get(Include(x), Exclude(y)).val << endl;
+            cout << d.Get(x, y) << endl;
         } else {
-            d.UpdateAt(x, Setter{y});
+            d.Push(x, x + 1, Setter{y});
         }
     }
 }

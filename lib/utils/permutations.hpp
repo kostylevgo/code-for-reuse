@@ -11,22 +11,31 @@ std::vector<int> Inverse(const std::vector<int>& p) {
     return ans;
 }
 
-std::vector<std::vector<int>> Cycles(std::vector<int> p) {
-    std::vector<std::vector<int>> ans;
+struct CyclePartition {
+    std::vector<std::vector<int>> cycle_list;
+    std::vector<int> cycle_id;
+    std::vector<int> cycle_pos;
+};
+
+CyclePartition Cycles(const std::vector<int>& p) {
+    CyclePartition res;
+    res.cycle_id.assign(p.size(), -1);
+    res.cycle_pos.assign(p.size(), -1);
     for (int i = 0; i < p.size(); ++i) {
-        if (p[i] == -1) {
+        if (res.cycle_id[i] != -1) {
             continue;
         }
-        ans.emplace_back();
+        int id = res.cycle_list.size();
+        res.cycle_list.emplace_back();
         int v = i;
         do {
-            ans.back().push_back(v);
-            int nxt = p[v];
-            p[v] = -1;
-            v = nxt;
+            res.cycle_id[v] = id;
+            res.cycle_pos[v] = res.cycle_list.back().size();
+            res.cycle_list.back().push_back(v);
+            v = p[v];
         } while (v != i);
     }
-    return ans;
+    return res;
 }
 
 #endif  // CODE_FOR_REUSE_UTILS_PERMUTATIONS_HPP_

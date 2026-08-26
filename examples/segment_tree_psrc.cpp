@@ -15,12 +15,16 @@ constexpr int INF = 1'000'000'009;
 constexpr ll INF18 = 1'000'000'000'000'000'018;
 
 #include "utils/container_as_function.hpp"
-#include "data_structures/scheme/top_down_segment_tree.hpp"
+#include "data_structures/monoid/no_push.hpp"
+#include "data_structures/monoid/setter.hpp"
+#include "data_structures/monoid/top_down_segment_tree.hpp"
+#include "data_structures/monoid/bottom_up_segment_tree.hpp"
 #include "io/vector_io.hpp"
 #include "modular_arithmetics/modular.hpp"
+
 using mint = Modular<998244353>;
 
-struct Fun : NoPush<Fun> {
+struct Fun : NoPushBase {
     mint a = 1;
     mint b = 0;
 
@@ -36,7 +40,7 @@ struct Fun : NoPush<Fun> {
         return a * x + b;
     }
 
-    static Fun Combine(Fun left, Fun right) {
+    friend Fun operator+(Fun left, Fun right) {
         return Fun{left.a * right.a, right(left.b)};
     }
 };
@@ -46,7 +50,9 @@ void solve() {
     cin >> n >> m;
     vector<Fun> a(n);
     cin >> a;
-    TopDownSegmentTree<Fun> st(n, AsFunction(a));
+    // TopDownSegmentTree<Fun>
+    BottomUpSegmentTree<Fun>
+    st(n, AsFunction(a));
     while (m--) {
         int t;
         cin >> t;
@@ -54,7 +60,7 @@ void solve() {
             int p;
             Fun f;
             cin >> p >> f;
-            st.UpdateAt(p, Setter{f});
+            st.Push(p, p + 1, Setter{f});
         } else {
             int l, r;
             mint x;

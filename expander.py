@@ -277,9 +277,7 @@ def main():
                      + post_process(output_lines))
     result = '\n'.join(output_lines)
 
-    # Write to output file
-    with open(args.file + ".expanded", "w") as out:
-        out.write(result)
+    print(result)
 
     # Copy to clipboard unless disabled
     if not args.no_clipboard:

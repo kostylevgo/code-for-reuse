@@ -1,12 +1,10 @@
-/**
-* Author: Roman Pervutinskiy
- * Description: Finds Minimal Cost Maximal Flow.
- */
+#ifndef CODE_FOR_REUSE_GRAPH_FLOW_MCMF_HPP_
+#define CODE_FOR_REUSE_GRAPH_FLOW_MCMF_HPP_
+
+#include <cassert>
+#include <queue>
 
 #include "common.hpp"
-
-#include <queue>
-#include <cassert>
 
 struct MCMFEdgeData {
     Vertex to;
@@ -156,7 +154,7 @@ struct MCMF : GraphHolder<MCMFEdgeData> {
         }
     }
 
-private:
+  private:
     bool UpdateEdge(Edge e) {
         Vertex to = To(e);
         int64_t d = dist[From(e)];
@@ -169,9 +167,10 @@ private:
         return false;
     }
 
-private:
+  private:
     VertexContainer<Edge> pr;
     VertexContainer<int64_t> dist;
     VertexContainer<int64_t> phi;
 };
 
+#endif  // CODE_FOR_REUSE_GRAPH_FLOW_MCMF_HPP_

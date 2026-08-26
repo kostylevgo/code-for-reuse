@@ -1,5 +1,8 @@
-#ifndef CODE_FOR_REUSE_GRAPH_FLOW_HPP_
-#define CODE_FOR_REUSE_GRAPH_FLOW_HPP_
+#ifndef CODE_FOR_REUSE_GRAPH_FLOW_FLOW_HPP_
+#define CODE_FOR_REUSE_GRAPH_FLOW_FLOW_HPP_
+
+#include <deque>
+#include <cstdint>
 
 #include "common.hpp"
 
@@ -182,4 +185,4 @@ struct Flow : GraphHolder<FlowEdgeData> {
     FlowUsedCounter used;
 };
 
-#endif  // CODE_FOR_REUSE_GRAPH_FLOW_HPP_
+#endif  // CODE_FOR_REUSE_GRAPH_FLOW_FLOW_HPP_

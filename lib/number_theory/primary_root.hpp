@@ -10,13 +10,13 @@ template <typename T = Factorize>
 constexpr int PrimaryRoot(int p, T&& factor = Factorize{}) {
     if (p == 2) return 1;
     int phi = p - 1;
-    std::vector<Divisor<int>> divs;
+    std::vector<int> divs;
     for (auto x : factor(phi)) {
-        divs.push_back(x);
+        divs.push_back(x.divisor);
     }
     for (int r = 2; r < p; ++r) {
         bool is_successful = true;
-        for (auto [div, _] : divs) {
+        for (auto div : divs) {
             int test = ModularExp(r, phi / div, p);
             if (test == 1) {
                 is_successful = false;

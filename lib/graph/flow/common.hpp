@@ -1,6 +1,9 @@
-#include "data_structures/used_counter.hpp"
+#ifndef CODE_FOR_REUSE_GRAPH_FLOW_COMMON_HPP_
+#define CODE_FOR_REUSE_GRAPH_FLOW_COMMON_HPP_
 
 #include <compare>
+
+#include "data_structures/used_counter.hpp"
 
 struct Vertex {
     friend struct Flow;
@@ -17,7 +20,7 @@ struct Vertex {
     std::strong_ordering operator<=>(const Vertex&) const = default;
     bool operator==(const Vertex&) const = default;
 
-private:
+  private:
     explicit Vertex(int v) : v(v) {
     }
 
@@ -40,7 +43,7 @@ struct Edge {
     std::strong_ordering operator<=>(const Edge&) const = default;
     bool operator==(const Edge&) const = default;
 
-private:
+  private:
     explicit Edge(int e) : e(e) {
     }
 
@@ -142,7 +145,7 @@ struct EdgeHolder {
         return Edge{edge.e ^ 1};
     }
 
-protected:
+  protected:
     EdgeContainer<EdgeData> edges;
 };
 
@@ -194,6 +197,8 @@ struct GraphHolder : EdgeHolder<EdgeData> {
     Vertex S{0};
     Vertex T{1};
 
-protected:
+  protected:
     std::vector<std::vector<Edge>> g;
 };
+
+#endif  // CODE_FOR_REUSE_GRAPH_FLOW_COMMON_HPP_

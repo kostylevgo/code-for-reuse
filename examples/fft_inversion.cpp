@@ -1,4 +1,4 @@
-#include "graph/flow/mcmf.hpp"
+// https://judge.yosupo.jp/problem/inv_of_formal_power_series
 
 #include <bits/stdc++.h>
 #ifndef LOCAL
@@ -14,31 +14,18 @@ typedef long double ld;
 constexpr int INF = 1'000'000'009;
 constexpr ll INF18 = 1'000'000'000'000'000'018;
 
-template <class T1, class T2>
-istream& operator>>(istream& is, pair<T1, T2>& a) {
-    return is >> a.first >> a.second;
-}
+#include "io/vector_io.hpp"
+#include "modular_arithmetics/fft_inverse.hpp"
 
-template <class T1, class T2>
-ostream& operator<<(ostream& os, const pair<T1, T2>& a) {
-    return os << '(' << a.first << ", " << a.second << ')';
-}
-
-template <class T>
-istream& operator>>(istream& is, vector<T>& a) {
-    for (auto& x : a) is >> x;
-    return is;
-}
-
-template <class T>
-ostream& operator<<(ostream& os, const vector<T>& a) {
-    for (auto x : a) os << x << ' ';
-    return os << endl;
-}
+using mint = Modular<998244353>;
 
 void solve() {
-    MCMF x;
-    x.Run();
+    int n;
+    cin >> n;
+    vector<mint> a(n);
+    cin >> a;
+    auto inv = Inverse(std::move(a), n);
+    cout << inv;
 }
 
 int32_t main() {

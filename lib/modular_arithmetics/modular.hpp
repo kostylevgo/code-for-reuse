@@ -8,6 +8,9 @@
 
 template <int M>
 struct Modular {
+    static constexpr bool IsModular = true;
+    static constexpr int kMod = M;
+
     int v;
 
     constexpr Modular() : v(0) {
@@ -83,5 +86,8 @@ struct std::hash<Modular<N>> {
         return x.v;
     }
 };
+
+template <typename T>
+concept Mint = T::IsModular;
 
 #endif  // CODE_FOR_REUSE_MODULAR_ARITHMETICS_MODULAR_HPP_

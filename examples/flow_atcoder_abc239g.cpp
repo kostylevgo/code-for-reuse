@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "../lib/graph/flow/flow.hpp"
+#include "graph/flow/flow.hpp"
 #include "io/vector_io.hpp"
 
 void solve() {
