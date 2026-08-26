@@ -10,7 +10,10 @@ template <typename T = Factorize>
 constexpr int PrimaryRoot(int p, T&& factor = Factorize{}) {
     if (p == 2) return 1;
     int phi = p - 1;
-    std::vector divs(std::from_range, factor(phi));
+    std::vector<Divisor<int>> divs;
+    for (auto x : factor(phi)) {
+        divs.push_back(x);
+    }
     for (int r = 2; r < p; ++r) {
         bool is_successful = true;
         for (auto [div, _] : divs) {

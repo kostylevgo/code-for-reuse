@@ -10,7 +10,7 @@ Checks: '-*,
 -readability-non-const-parameter,
 -readability-static-accessed-through-instance,
 
-google-build-using-namespace,
+#google-build-using-namespace,
 
 bugprone-argument-comment,
 bugprone-assert-side-effect,
