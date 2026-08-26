@@ -5,10 +5,8 @@
 
 #include "modular.hpp"
 
-template <int N, int MOD>
+template <Mint mint, int N>
 class Factorials {
-    using mint = Modular<MOD>;
-
   public:
     Factorials() {
         factorials_[0] = 1;

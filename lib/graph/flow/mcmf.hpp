@@ -10,6 +10,11 @@ struct MCMFEdgeData {
     Vertex to;
     int64_t cap;
     int64_t cost;
+
+    MCMFEdgeData() = default;
+
+    MCMFEdgeData(Vertex to, int64_t cap, int64_t cost) : to(to), cap(cap), cost(cost) {
+    }
 };
 
 struct MCMF : GraphHolder<MCMFEdgeData> {
@@ -20,6 +25,20 @@ struct MCMF : GraphHolder<MCMFEdgeData> {
     struct Result {
         int64_t total_flow = 0;
         int64_t total_cost = 0;
+
+        bool IsEmpty() const {
+            return total_flow == 0;
+        }
+
+        Result& operator+=(Result o) {
+            total_flow += o.total_flow;
+            total_cost += o.total_cost;
+            return *this;
+        }
+
+        friend Result operator+(Result a, Result b) {
+            return a += b;
+        }
     };
 
     struct DJEntry {
@@ -97,8 +116,9 @@ struct MCMF : GraphHolder<MCMFEdgeData> {
         }
     }
 
-    bool Retract(Result& result) {
-        if (dist[T] == kMax) return false;
+    Result Retract() {
+        if (dist[T] == kMax) return {0, 0};
+        Result result;
         int64_t min_cap = kMax;
         Vertex cur = T;
         while (cur != S) {
@@ -118,7 +138,7 @@ struct MCMF : GraphHolder<MCMFEdgeData> {
                 phi[v] += dist[v];
             }
         }
-        return true;
+        return result;
     }
 
     // NB: No negative weight cycles are allowed
@@ -126,32 +146,42 @@ struct MCMF : GraphHolder<MCMFEdgeData> {
         Result result;
         if (!AreCostsNonNegative()) {
             Ford();
-            if (!Retract(result)) {
+            auto res = Retract();
+            if (res.IsEmpty()) {
                 return result;
             }
+            result += res;
         }
         while (true) {
             Dijkstra();
-            if (!Retract(result)) {
-                return result;
+            auto res = Retract();
+            if (res.IsEmpty()) {
+                break;
             }
+            result += res;
         }
+        return result;
     }
 
     Result Hungarian() {
         Result result;
         if (!AreCostsNonNegative()) {
             Ford();
-            if (!Retract(result)) {
+            auto res = Retract();
+            if (res.IsEmpty()) {
                 return result;
             }
+            result += res;
         }
         while (true) {
             SquareDijkstra();
-            if (!Retract(result)) {
-                return result;
+            auto res = Retract();
+            if (res.IsEmpty()) {
+                break;
             }
+            result += res;
         }
+        return result;
     }
 
   private:

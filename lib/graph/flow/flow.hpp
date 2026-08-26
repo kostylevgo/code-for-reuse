@@ -12,6 +12,11 @@ const Cap kMax = 4e18;
 struct FlowEdgeData {
     Vertex to;
     Cap cap;
+
+    FlowEdgeData() = default;
+
+    FlowEdgeData(Vertex to, Cap cap) : to(to), cap(cap) {
+    }
 };
 
 struct Flow : GraphHolder<FlowEdgeData> {

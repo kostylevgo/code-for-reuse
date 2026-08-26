@@ -80,9 +80,9 @@ struct Modular {
     bool operator==(const Modular&) const = default;
 };
 
-template <int N>
-struct std::hash<Modular<N>> {
-    size_t operator()(const Modular<N>& x) const {
+template <int M>
+struct std::hash<Modular<M>> {
+    size_t operator()(const Modular<M>& x) const {
         return x.v;
     }
 };
