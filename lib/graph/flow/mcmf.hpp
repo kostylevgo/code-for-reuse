@@ -7,9 +7,9 @@
 #include "common.hpp"
 
 struct MCMFEdgeData {
-    Vertex to;
-    int64_t cap;
-    int64_t cost;
+    Vertex to{};
+    int64_t cap = 0;
+    int64_t cost = 0;
 
     MCMFEdgeData() = default;
 

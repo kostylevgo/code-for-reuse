@@ -10,8 +10,8 @@ using Cap = int64_t;
 const Cap kMax = 4e18;
 
 struct FlowEdgeData {
-    Vertex to;
-    Cap cap;
+    Vertex to{};
+    Cap cap = 0;
 
     FlowEdgeData() = default;
 
