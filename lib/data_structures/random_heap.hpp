@@ -18,15 +18,14 @@ struct RandomHeap : std::vector<T> {
     }
 
     T pop_random() {
-        auto index = gen() % heap.size();
-        T result = std::move(heap[index]);
-        std::swap(heap[index], heap.back());
-        heap.pop_back();
+        auto index = gen() % this->size();
+        T result = std::move((*this)[index]);
+        std::swap((*this)[index], this->back());
+        this->pop_back();
         return result;
     }
 
     std::mt19937 gen;
-    std::vector<T> heap;
 };
 
 #endif  // CODE_FOR_REUSE_DATA_STRUCTURES_RANDOM_HEAP_HPP_
