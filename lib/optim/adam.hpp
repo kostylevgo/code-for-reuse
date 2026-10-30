@@ -1,6 +1,7 @@
 #ifndef CODE_FOR_REUSE_OPTIM_ADAM_HPP_
 #define CODE_FOR_REUSE_OPTIM_ADAM_HPP_
 
+#include <cmath>
 #include <vector>
 
 template <class ld = long double, ld epsilon = (ld)1e-8, ld fast_lr_decay = (ld)0.9, ld beta1 = (ld)0.9,
@@ -25,7 +26,7 @@ struct Adam {
     }
 
     void step(ld loss, const auto& grad) {
-        if (isnan(loss) || isinf(loss) || loss > min_loss) {
+        if (std::isnan(loss) || std::isinf(loss) || loss > min_loss) {
             // rollback
             variables = best_variables;
 
